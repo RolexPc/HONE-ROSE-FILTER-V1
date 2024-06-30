@@ -34,9 +34,7 @@ AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 # auth_channel means force subscribe channel.
 # if REQUEST_TO_JOIN_MODE is true then force subscribe work like request to join fsub, else if false then work like normal fsub.
 REQUEST_TO_JOIN_MODE = bool(environ.get('REQUEST_TO_JOIN_MODE', True)) # Set True Or False
-auth_channel = environ.get('AUTH_CHANNEL', '') # give your force subscribe channel id here else leave it blank
 auth_grp = environ.get('AUTH_GROUP', '') # give your force subscribe group id here else leave it blank
-AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 support_chat_id = environ.get('SUPPORT_CHAT_ID', '')
 reqst_channel = environ.get('REQST_CHANNEL_ID', '')
@@ -45,12 +43,19 @@ SUPPORT_CHAT_ID = int(support_chat_id) if support_chat_id and id_pattern.search(
 INDEX_REQ_CHANNEL = int(environ.get('INDEX_REQ_CHANNEL', LOG_CHANNEL))
 FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).split()]
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
-AUTH_CHANNEL = -1002022755818
 
 # MongoDB information
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://atmanaf:atmanaf@cluster0.k4xmqd4.mongodb.net/")
 DATABASE_NAME = environ.get('DATABASE_NAME', "atmanaf")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
+
+#FSUB
+auth_channel = environ.get('AUTH_CHANNEL','-1002173491705')
+AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
+REQ_CHANNEL=environ.get("REQ_CHANNEL", "-1002173491705")
+REQ_CHANNEL = int(REQ_CHANNEL) if REQ_CHANNEL is not None else False
+
+JOIN_REQS_DB = environ.get("JOIN_REQS_DB", DATABASE_URI)
 
 # Premium And Referal Settings
 PREMIUM_AND_REFERAL_MODE = bool(environ.get('PREMIUM_AND_REFERAL_MODE', True)) # Set Ture Or False
