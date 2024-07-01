@@ -45,14 +45,14 @@ FILE_STORE_CHANNEL = [int(ch) for ch in (environ.get('FILE_STORE_CHANNEL', '')).
 DELETE_CHANNELS = [int(dch) if id_pattern.search(dch) else dch for dch in environ.get('DELETE_CHANNELS', '0').split()]
 
 # MongoDB information
-DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://atmanaf:atmanaf@cluster0.k4xmqd4.mongodb.net/")
-DATABASE_NAME = environ.get('DATABASE_NAME', "atmanaf")
+DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://pcmovies:pcmovies@cluster0.4vv9ebl.mongodb.net/?retryWrites=true&w=majority")
+DATABASE_NAME = environ.get('DATABASE_NAME', "pcmovies")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 
 #FSUB
-auth_channel = environ.get('AUTH_CHANNEL','-1002173491705')
+auth_channel = environ.get('AUTH_CHANNEL','-1002154881159')
 AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_channel) else None
-REQ_CHANNEL=environ.get("REQ_CHANNEL", "-1002173491705")
+REQ_CHANNEL=environ.get("REQ_CHANNEL", "-1002154881159")
 REQ_CHANNEL = int(REQ_CHANNEL) if REQ_CHANNEL is not None else False
 
 JOIN_REQS_DB = environ.get("JOIN_REQS_DB", DATABASE_URI)
