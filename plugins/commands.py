@@ -15,7 +15,6 @@ from TechVJ.util.file_properties import get_name, get_hash, get_media_file_size
 logger = logging.getLogger(__name__)
 
 BATCH_FILES = {}
-join_db = JoinReqs
 
 REACTIONS = ["🔥", "❤️", "😍", "⚡"]
 
